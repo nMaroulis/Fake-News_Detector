@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="mbody" style="text-align:center;width:100%;height:100%;position: relative;padding: 25px">
+
+    <h1>Fake News Detector</h1>
+    <h3> The following implementation was developed for the purposes of the Big Data Class Project (MSc.).</h3>
+
+
+    <p style="color:black;padding: 45px"> Use this website to analyze an article you found online, in order to find out if it's <strong>fake</strong> <br> The article classification is achieved using Deep Neural Nets in Tensorflow API <br> as well as other ML techniques like SVM, Decision Trees etc. <br> Over 60.000 articles were used for training provided by kaggle.com as well as the onion subreddit. </p>
+
+    <a type="button" href="content_detector" class="btn btn-primary">Get Started</a>
+
+</div>
+{% end %}

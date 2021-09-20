@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>content tab</title>
+    <link rel="stylesheet" href="/static/css/spinner.css">
+    {% from src.article_classification import C_STATUS, C_PRED, F_PRED, VERDICT%}
+
+
+    <style>
+
+        .fake_stamp{
+          height:119px;
+          width:124px;
+          z-index: 999;
+          position:relative;
+          background-image: url("/static/img/fake.png");
+          -webkit-animation-name: pulse;
+          animation-name: pulse;
+          animation-delay:0.5s;
+          -webkit-animation-duration: 0.8s;
+          animation-duration: 0.5s;
+          opacity: 0;
+          -webkit-animation-fill-mode:forwards;
+           animation-fill-mode:forwards;
+        }
+
+        .approved_stamp{
+          height:107px;
+          width:132px;
+          z-index: 999;
+          position:relative;
+          background-image: url("/static/img/approved.png");
+          -webkit-animation-name: pulse;
+          animation-name: pulse;
+          animation-delay:0.5s;
+          -webkit-animation-duration: 0.8s;
+          animation-duration: 0.5s;
+          opacity: 0;
+          -webkit-animation-fill-mode:forwards;
+           animation-fill-mode:forwards;
+        }
+
+        @-webkit-keyframes pulse{
+          0%{
+            opacity: 0;
+          }
+          10%{
+            opacity:.50;
+            transform-origin: 50% 50%;
+            transform: rotate(-2deg) scale(5);
+            transition: all .3s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+          }
+          100%{
+            opacity:1;
+            transform: rotate(-15deg) scale(1);
+          }
+        }
+
+    </style>
+</head>
+<body>
+
+    {% if not C_STATUS%}
+
+    <!--    <script>-->
+    <!--        document.getElementById("content_button").style.display = "none";-->
+    <!--    </script>-->
+
+    <!--    <div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> <p style="color:#505050;text-align: center;margin-top:0;font-size: 10px;margin-bottom: 0;">Judge makes a desicion.</p>-->
+
+    {% else %}
+
+        <script>
+            clearInterval(acd_int);
+            // document.getElementById("content_main").style.display = "none";
+
+            document.getElementById("content_button").innerHTML = '<h4><a data-toggle="modal" onclick="" data-target="#details_modal" style="margin-right: 40px;"> <i class="glyphicon glyphicon-list-alt"></i> More Details </a>  <a href="javascript:location.reload();" > <i class="glyphicon glyphicon-repeat"></i> Go Again </a> </h4>';
+            document.getElementById("article_content").disabled = true;
+        </script>
+
+        {% if F_PRED %}
+
+            <div class="fake_stamp"></div>
+            <script>
+            $('#article_content_form_check').addClass('has-error');
+            </script>
+
+        {% else %}
+            <div class="approved_stamp"></div>
+            <script>
+            $('#article_content_form_check').addClass('has-success');
+            </script>
+        {% end %}
+
+    {% end %}
+
+
+</body>
+        <div class="modal fade" id="details_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-color: #4b6cb7;">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Article Details</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table">
+                              <thead>
+                                <tr >
+                                  <th style="text-align: center;" scope="col">#</th>
+                                  <th style="text-align: center;" scope="col">Result</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Verdict:</td>
+                                  <td>{{VERDICT}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Category:</td>
+                                  <td>-</td>
+                                </tr>
+                                <tr>
+                                  <td>Source:</td>
+                                  <td>Uknown</td>
+                                </tr>
+                              </tbody>
+                        </table>
+
+
+                    </div>
+                    <div class="modal-footer" style="border-color: #4b6cb7;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</html>
+

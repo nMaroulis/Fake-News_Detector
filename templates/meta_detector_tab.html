@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>content tab</title>
+    <link rel="stylesheet" href="/static/css/spinner.css">
+    {% from src.meta_classification import MC_STATUS, MC_PRED, MF_PRED%}
+
+
+    <style>
+
+        .mfake_stamp{
+          height:119px;
+          width:124px;
+          z-index: 999;
+          position:relative;
+          background-image: url("/static/img/fake.png");
+          -webkit-animation-name: pulse;
+          animation-name: pulse;
+          animation-delay:0.5s;
+          -webkit-animation-duration: 0.8s;
+          animation-duration: 0.5s;
+          opacity: 0;
+          -webkit-animation-fill-mode:forwards;
+           animation-fill-mode:forwards;
+        }
+
+        .mapproved_stamp{
+          height:107px;
+          width:132px;
+          z-index: 999;
+          position:relative;
+          background-image: url("/static/img/approved.png");
+          -webkit-animation-name: pulse;
+          animation-name: pulse;
+          animation-delay:0.5s;
+          -webkit-animation-duration: 0.8s;
+          animation-duration: 0.5s;
+          opacity: 0;
+          -webkit-animation-fill-mode:forwards;
+           animation-fill-mode:forwards;
+        }
+
+        @-webkit-keyframes pulse{
+          0%{
+            opacity: 0;
+          }
+          10%{
+            opacity:.50;
+            transform-origin: 50% 50%;
+            transform: rotate(-2deg) scale(5);
+            transition: all .3s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+          }
+          100%{
+            opacity:1;
+            transform: rotate(-15deg) scale(1);
+          }
+        }
+
+    </style>
+</head>
+<body>
+
+    {% if not MC_STATUS%}
+
+    {% else %}
+
+        <script>
+            clearInterval(meta_int);
+
+            document.getElementById("meta_button").innerHTML = '<h4><a href="javascript:location.reload();" > <i class="glyphicon glyphicon-repeat"></i> Go Again </a> </h4>';
+            document.getElementById("meta_url").disabled = true;
+            document.getElementById("meta_title").disabled = true;
+            document.getElementById("meta_author").disabled = true;
+        </script>
+
+        {% if MF_PRED %}
+
+            <div class="mfake_stamp"></div>
+
+        {% else %}
+            <div class="mapproved_stamp"></div>
+        {% end %}
+
+    {% end %}
+
+
+</body>
+
+</html>

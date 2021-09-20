@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="mbody" style="text-align:center;width:100%;height:100%;position: relative;padding: 25px">
+
+    <h1> Fake Article Detector</h1>
+    <h4> Article Metadata Based Classification</h4>
+    <h5> Fill out the Article's Metadata below.</h5>
+    <br>
+   <!-- <div id="acd_top_interval"> LOADING .....</div> -->
+
+
+    <div style="margin: 8em 10em 0 10em;position: relative;">
+
+        <div id="meta_top_interval" style="position: absolute;margin-left: 45%;margin-top: 5em"> </div>
+
+        <form onsubmit="handle_meta_query();hideMetaButton();">
+         <div class="row">
+                <div class="col-xs-6 form-group">
+                    <label>Website</label>
+                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-modal-window"></i></span><input id="meta_url" name="meta_url" placeholder="Domain Url" class="form-control" value="" type="text"></div>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <label>Author</label>
+                   <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span><input id="meta_author" name="meta_author" placeholder="Full Name" class="form-control" value="" type="text"></div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <label class="col-xs-12">Title</label>
+                    </div>
+                             <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-text-size"></i></span><input id="meta_title" name="meta_title" placeholder="Article Title" class="form-control" value="" type="text"></div>
+                </div>
+                <div class="col-xs-6 form-group">
+                    <label>Language</label>
+                    <div class="input-group">
+                      <span class="input-group-addon" style="max-width: 100%;"><i class="glyphicon glyphicon-list"></i></span>
+                      <select class="selectpicker form-control">
+                         <option value="eng"> English </option>
+                      </select>
+                   </div>
+                </div>
+            </div>
+             <div id="meta_button">
+                 <br>
+                <button type="submit" class="btn btn-lg btn-danger"><strong>JUDGE </strong><img src="/static/img/gavel_white_24x24.png"></button>
+            </div>
+          </form>
+    <script>
+        function hideMetaButton() {
+            document.getElementById("meta_button").innerHTML = '<div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> <p style="color:#505050;text-align: center;margin-top:0;font-size: 10px;margin-bottom: 0;">Judge makes a desicion.</p>';
+        }
+    </script>
+
+    </div>
+
+</div>
+{% end %}

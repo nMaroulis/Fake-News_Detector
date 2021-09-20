@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="mmbody" style="text-align:center;width:100%;height:100%;position: relative;padding: 25px">
+    {% from src.untrusted_sites import CALCULATED, UNTRUSTED%}
+
+    <h1> Untrusted Websites</h1>
+    <h3> These websites have been found publishing fake news</h3>>
+    <br>
+   <!-- <div id="acd_top_interval"> LOADING .....</div> -->
+
+
+    <div style="margin: 3em 10em 0 10em">
+
+         {% if CALCULATED %}
+            <br><br>
+
+
+            <table class="table" style="overflow-y:scroll;height:40em;display: block">
+              <thead>
+                <tr>
+                  <th scope="col" style="text-align: center;">#</th>
+                  <th scope="col" style="text-align: center;">URL Domain</th>
+                </tr>
+              </thead>
+              <tbody>
+
+              {% for i in range(1,len(UNTRUSTED)+1) %}
+                <tr>
+                  <td>{{ i }}</td>
+                  <td>{{ UNTRUSTED[i-1] }}</td>
+                </tr>
+
+            {% end %}
+
+              </tbody>
+            </table>
+
+            {% else %}
+                <div class="spinner"> <div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div> <p style="color:#505050;text-align: center;margin-top:0;font-size: 10px;margin-bottom: 0;">Loading Domain Table.</p>
+            {% end %}
+
+
+    </div>
+
+</div>
+{% end %}

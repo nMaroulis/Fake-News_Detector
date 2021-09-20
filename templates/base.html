@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/static/img/fn_logo.png" type="image/x-icon"/>
+    <title>Fake News Detector</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-1.12.0.min.js"></script>
+
+    <link rel="stylesheet" href="/static/css/index.css">
+
+{% block js %}
+<script>
+
+    function handle_content_query(){
+
+        event.preventDefault();
+        var q = document.getElementById("article_content").value;
+        console.log(q);
+        // if (q.length < 30 ){
+        //     alert('Article Size is too small');
+        // }
+        // else{
+            send_content_query(q);
+        //}
+    }
+
+    function send_content_query(q){
+        var data = {};
+        data["content"] = q;
+        var url = "/content_query_handler";
+        var jsonData = JSON.stringify(data);
+        console.log("dbg :: query: " + data);
+        if (q.length < 40 ){
+            alert('Article Size too small');
+            exit(0);
+        }
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: "application/x-www-form-urlencoded",
+            dataType: 'text',
+            crossDomain: true,
+            cache: false,
+            data:jsonData,
+            success: function(data){
+                console.log("dbg :: send_content_query :: RESPONSE ");
+                // alert(JSON.stringify(data));
+            },
+            error: function (status) {
+                console.log("dbg :: send_content_query :: HTTP error " + JSON.stringify(status) );
+            }
+        });
+    }
+
+    function handle_meta_query(){
+
+        event.preventDefault();
+        let q1 = document.getElementById("meta_url").value;
+        //let q2 = document.getElementById("meta_author").value;
+        let q3 = document.getElementById("meta_title").value;
+        // var q4 = english
+        console.log(q1 + q3);
+        send_meta_query(q1, q3);
+    }
+
+
+    function send_meta_query(q1, q3){
+        var data = {};
+        data["domain"] = q1;
+        //data['author'] = q2;
+        data['title'] = q3;
+
+        var url = "/meta_query_handler";
+        var jsonData = JSON.stringify(data);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            contentType: "application/x-www-form-urlencoded",
+            dataType: 'text',
+            crossDomain: true,
+            cache: false,
+            data:jsonData,
+            success: function(data){
+                console.log("dbg :: send_meta_query :: RESPONSE ");
+            },
+            error: function (status) {
+                console.log("dbg :: send_meta_query :: HTTP error " + JSON.stringify(status) );
+            }
+        });
+    }
+
+
+    var acd_progress =  function(){
+         $("#acd_top_interval").load('content_detector_tab');
+    };
+
+    acd_progress();
+    acd_int = setInterval(acd_progress, 7000); //3500
+
+
+    var meta_progress =  function(){$("#meta_top_interval").load('meta_detector_tab');};
+    meta_progress();
+    meta_int = setInterval(meta_progress, 7000); //3500
+
+
+</script>
+
+{% end %}
+</head>
+<body>
+
+<div class="wrapper">
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3> <img height="42" style="margin-top: -10px;" src="/static/img/fn_logo.png"/> FN-Detector </h3>
+            <strong> <img height="42" src="/static/img/fn_logo.png"/> </strong>
+        </div>
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="/">
+                    <i class="glyphicon glyphicon-home"></i>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a data-toggle="modal" onclick="" data-target="#search_modal">
+                    <i class="glyphicon glyphicon-search"></i>
+                    Search
+                </a>
+                 <a href="#troubleSubMenu" data-toggle="collapse" aria-expanded="false" style="overflow-wrap: break-word;">
+                     <i class="glyphicon glyphicon-thumbs-up"></i>
+                     Article Judge
+                </a>
+                <ul class="collapse list-unstyled" id="troubleSubMenu">
+                    <li><a id="t1" href="content_detector">By Content</a></li>
+                    <li><a id="t2" href="meta_detector">By Metadata</a></li>
+                    <li><a id="t3">Detect+&nbsp; <span class="label label-danger">Pro</span> </a> </li>
+
+                </ul>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                    <i class="glyphicon glyphicon-stats"></i>
+                    Analytics
+                </a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li><a id="c1" href="untrusted">Untrusted Websites</a></li>
+                    <li><a id="c2" href="">News Type Analytics</a></li>
+                    <li><a id="c3" href="wordcloud">Wordclouds</a></li>
+                    <li><a id="c4" href="more">More </a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="list-unstyled CTAs">
+            <!--<li><a href="http://scan.di.uoa.gr/" class="download">Download source</a></li>-->
+
+            <li><a href="https://github.com/nMaroulis" target="_blank" class="article" style="bottom: 0;position: absolute">Developed by N.M. 2019&nbsp; <img src="/static/img/github-icon-png-7-transparent.png" style="height:30px;padding-bottom: 3px;"></a> </li>
+
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-default" style="background-image: url('/static/img/bg.png');">
+            <div class="container-fluid">
+
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" style="background-color:#dcdcdc;color:#505050;" class="btn btn-lg navbar-btn">
+                        <i class="glyphicon glyphicon-list"></i>
+                        <span></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <div style="text-align: center;font-size: 24px;font-weight:500;margin-top:1.6vh;" id="top_header">Home</div>
+                </div>
+            </div>
+        </nav>
+        <div style="background-image: url('/static/img/bg.png');position: relative;height: calc(100% - 69px);width: 100%;overflow-x: hidden;">
+
+            {% block body %}
+            {% end %}
+        </div>
+    </div>
+</div>
+
+</body>
+
+<div id="detailTab" style=" display: none;">
+</div>
+
+<div class="modal fade" id="search_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="border-color: #4b6cb7;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Search Trending</h4>
+            </div>
+            <div class="modal-body">
+
+                <strong><span class="help-block" style="color:dimgrey;text-align:  center;" id="s_loc"></span></strong>
+
+                <input class="form-control" id="addr" type="text" placeholder="Go...">
+            </div>
+            <div class="modal-footer" style="border-color: #4b6cb7;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" style="background-color: #ececec;" data-toggle="modal" data-target="#search_modal">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+</script>
+
+<script src="/static/js/index.js"></script>
+
+
+</html>

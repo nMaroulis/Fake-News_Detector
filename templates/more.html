@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div id="mmbody" style="text-align:center;width:100%;height:100%;position: relative;padding: 25px">
+    {% from src.untrusted_sites import CALCULATED, UNTRUSTED%}
+
+    <h1> Sample Articles</h1>
+
+    <br>
+   <!-- <div id="acd_top_interval"> LOADING .....</div> -->
+
+
+    <div style="margin: 3em 10em 0 10em">
+<h3>
+    Real
+</h3>
+        <h4>Trump Administration Proposes Rollback of Transgender Protections</h4>
+
+<p style="color: black">WASHINGTON — President Trump’s order allowing Attorney General William P. Barr to declassify any intelligence that sparked the opening of the Russia investigation sets up a potential confrontation with the C.I.A., including over the possible implications for a person close to President Vladimir V. Putin of Russia who provided information to the C.I.A. about his involvement in Moscow’s 2016 election interference.
+
+The concern about the source, who is believed to be still alive, is one of several issues raised by Mr. Trump’s decision to use the intelligence to pursue his political enemies. It has also prompted fears from former national security officials and Democratic lawmakers that other sources or methods of intelligence gathering — among the government’s most closely held secrets — could be made public, not because of leaks to the news media that the administration denounces, but because the president has determined it suits his political purposes.
+</p>
+
+<h3>
+    Fake
+</h3>
+        <h4>Mrs. May is leaving Downing Street today.</h4>
+<p style="color: black">
+    Facing a cabinet rebellion, Theresa May set out Friday morning a timetable for her departure from office.
+
+Standing in front of 10 Downing Street, Mrs. May said it was in the “best interests of the country for a new prime minister” to lead Britain through the Brexit process. She announced plans to step down as the leader of the Conservative Party on June 7, with the process to replace her beginning the following week. She will remain as a lame-duck prime minister until a new leader is chosen, probably by the end of July.
+
+“I feel as certain today as I did three years ago that in a democracy, if you give people a choice you have a duty to implement what they decide. I have done my best to do that,” she added. “I have done everything I can to convince M.P.s to back that deal. Sadly, I have not been able to do so.”
+</p>
+
+    </div>
+
+</div>
+{% end %}
